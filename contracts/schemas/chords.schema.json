@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://polyscribe.local/schemas/chords.schema.json",
+  "title": "PolyScribe chords.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "timebase", "segments"],
+  "properties": {
+    "schema_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "timebase": { "type": "string", "const": "seconds" },
+    "producer": { "type": "string" },
+    "segments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["start", "end", "label", "raw_label", "confidence"],
+        "properties": {
+          "start": { "type": "number", "minimum": 0 },
+          "end": { "type": "number", "minimum": 0 },
+          "label": { "type": "string", "minLength": 1 },
+          "raw_label": { "type": "string", "minLength": 1 },
+          "confidence": { "type": ["number", "null"] }
+        }
+      }
+    }
+  }
+}

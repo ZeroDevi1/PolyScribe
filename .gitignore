@@ -1,0 +1,40 @@
+# 用户音频、上游仓库、任务产物、模型与虚拟环境不进 Git
+audios/
+vendor/
+jobs/
+assets/
+**/.venv/
+**/.venv-*/
+.python-version
+
+# 模型与缓存
+*.pt
+*.ckpt
+*.onnx
+*.safetensors
+*.pth
+*.bin
+*.npz
+huggingface/
+.cache/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# 编辑器与系统
+.idea/
+.vscode/
+*.swp
+Thumbs.db
+Desktop.ini
+.DS_Store

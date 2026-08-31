@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://polyscribe.local/schemas/error.schema.json",
+  "title": "PolyScribe error payload",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["error_type", "message"],
+  "properties": {
+    "error_type": { "type": "string", "minLength": 1 },
+    "message": { "type": "string", "minLength": 1 },
+    "stage_id": { "type": ["string", "null"] },
+    "exit_code": { "type": ["integer", "null"] },
+    "details": { "type": "object" }
+  }
+}

@@ -1,0 +1,13 @@
+[project]
+name = "polyscribe-workflow-basic-pitch"
+version = "0.1.0"
+description = "Basic Pitch backing-harmony MIDI worker"
+requires-python = ">=3.10,<3.11"
+dependencies = [
+    "basic-pitch",
+    "pretty_midi",
+    "setuptools>=70,<82",
+]
+
+[tool.uv]
+package = false

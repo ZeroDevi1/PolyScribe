@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://polyscribe.local/schemas/request.schema.json",
+  "title": "PolyScribe worker request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "job_id",
+    "stage_id",
+    "workflow",
+    "params",
+    "inputs",
+    "outputs",
+    "work_dir"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "job_id": { "type": "string", "minLength": 1 },
+    "stage_id": { "type": "string", "minLength": 1 },
+    "workflow": {
+      "type": "string",
+      "enum": ["separation", "muscriptor", "game", "basic_pitch"]
+    },
+    "params": { "type": "object" },
+    "inputs": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "outputs": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "work_dir": { "type": "string", "minLength": 1 }
+  }
+}

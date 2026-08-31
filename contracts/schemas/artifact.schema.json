@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://polyscribe.local/schemas/artifact.schema.json",
+  "title": "PolyScribe artifact record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "kind",
+    "role",
+    "path",
+    "sha256",
+    "producer_stage",
+    "confidence",
+    "metadata"
+  ],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "kind": { "type": "string", "minLength": 1 },
+    "role": { "type": "string", "minLength": 1 },
+    "path": { "type": "string", "minLength": 1 },
+    "sha256": { "type": ["string", "null"] },
+    "producer_stage": { "type": "string", "minLength": 1 },
+    "confidence": { "type": ["number", "null"] },
+    "metadata": { "type": "object" }
+  }
+}

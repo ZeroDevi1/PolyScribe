@@ -1,0 +1,20 @@
+[project]
+name = "polyscribe-workflow-game"
+version = "0.1.0"
+description = "GAME lead-vocal MIDI worker"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "click",
+    "librosa",
+    "lightning",
+    "lightning-utilities",
+    "numpy",
+    "pretty_midi",
+    "soundfile",
+    "torch",
+    "torchaudio",
+    "pyyaml",
+]
+
+[tool.uv]
+package = false

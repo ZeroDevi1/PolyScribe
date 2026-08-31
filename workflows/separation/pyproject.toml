@@ -1,0 +1,14 @@
+[project]
+name = "polyscribe-workflow-separation"
+version = "0.1.0"
+description = "Vocal/instrumental and lead/backing separation worker"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "audio-separator",
+    "onnxruntime",
+    "audioread",
+    "librosa",
+]
+
+[tool.uv]
+package = false
