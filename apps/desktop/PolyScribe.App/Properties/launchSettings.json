@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "PolyScribe (Unpackaged)": {
+      "commandName": "Project",
+      "nativeDebugging": false
+    }
+  }
+}

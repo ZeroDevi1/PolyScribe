@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="PolyScribe.App.Pages.PreviewPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="using:PolyScribe.App"
+    xmlns:controls="using:PolyScribe.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:PolyScribe.App.Models"
+    mc:Ignorable="d">
+
+    <Grid Padding="{StaticResource PagePadding}" RowSpacing="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <TextBlock Style="{StaticResource PageTitleStyle}" Text="{x:Bind ViewModel.Title, Mode=OneWay}" />
+            <TextBlock Style="{StaticResource PageSubtitleStyle}" Text="{x:Bind ViewModel.Subtitle, Mode=OneWay}" />
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <ScrollViewer Visibility="{x:Bind app:BindHelpers.VisibleIf(ViewModel.HasJob), Mode=OneWay}">
+                <StackPanel Spacing="16">
+                    <ComboBox
+                        Header="钢琴卷帘轨道"
+                        HorizontalAlignment="Left"
+                        MinWidth="240"
+                        DisplayMemberPath="Title"
+                        ItemsSource="{x:Bind ViewModel.Tracks, Mode=OneWay}"
+                        SelectedItem="{x:Bind ViewModel.SelectedTrack, Mode=TwoWay}" />
+
+                    <Border Style="{StaticResource CardStyle}" Padding="12">
+                        <MediaPlayerElement
+                            x:Name="Player"
+                            AreTransportControlsEnabled="True"
+                            AutoPlay="False" />
+                    </Border>
+
+                    <TextBlock Style="{StaticResource SectionHeaderStyle}" Text="波形" />
+                    <Border Style="{StaticResource CardStyle}" Padding="8">
+                        <controls:WaveformView Height="120" Peaks="{x:Bind ViewModel.Peaks, Mode=OneWay}" />
+                    </Border>
+
+                    <TextBlock Style="{StaticResource SectionHeaderStyle}" Text="和弦时间线" />
+                    <ItemsControl ItemsSource="{x:Bind ViewModel.Chords, Mode=OneWay}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" Spacing="8" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="models:ChordSegment">
+                                <Border
+                                    Background="{ThemeResource SubtleFillColorSecondaryBrush}"
+                                    CornerRadius="6"
+                                    Padding="10,6">
+                                    <StackPanel>
+                                        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="{x:Bind Label}" />
+                                        <TextBlock
+                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                            FontSize="11"
+                                            Text="{x:Bind Start}" />
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <TextBlock Style="{StaticResource SectionHeaderStyle}" Text="钢琴卷帘" />
+                    <Border Style="{StaticResource CardStyle}" Padding="8">
+                        <controls:PianoRollView
+                            Height="280"
+                            Duration="{x:Bind ViewModel.DurationSeconds, Mode=OneWay}"
+                            Notes="{x:Bind ViewModel.Notes, Mode=OneWay}" />
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Spacing="8"
+                Visibility="{x:Bind app:BindHelpers.CollapsedIf(ViewModel.HasJob), Mode=OneWay}">
+                <FontIcon
+                    FontSize="40"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Glyph="&#xE7C3;" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    MaxWidth="420"
+                    Style="{StaticResource SubtitleTextBlockStyle}"
+                    Text="{x:Bind ViewModel.EmptyMessage, Mode=OneWay}"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

@@ -8,6 +8,7 @@
 4. [任务与产物契约](artifact_contract.md)：任务目录、清单文件与中间结果格式。
 5. [VoiceLab demo 迁移与重构](voicelab_migration.md)：哪些思路保留、哪些实现废弃，以及如何迁入本仓库。
 6. [实施 Roadmap](roadmap.md)：阶段、交付物和验收标准。
+7. [ADR 0001：WinUI 3 unpackaged 桌面壳](adr/0001-winui3-unpackaged.md)
 
 ## 核心原则
 

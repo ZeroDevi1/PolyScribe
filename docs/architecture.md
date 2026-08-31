@@ -164,4 +164,6 @@ pending -> running -> succeeded
 
 ## 8. UI 技术路线
 
-脚本和 CLI 的钢琴、人声、和弦 MIDI 流水线全部达到验收门槛后，才开始完整 GUI。桌面端建议使用 .NET Windows UI（WinUI 3 或 WPF 二选一，原型阶段通过 spike 决定），AI worker 保持独立进程。GUI 不承担模型推理，只消费已经稳定的任务 API 和产物。
+桌面端使用 **WinUI 3**（Windows App SDK，unpackaged self-contained），决策见 [ADR 0001](adr/0001-winui3-unpackaged.md)。工程在 `apps/desktop/`。GUI 只消费稳定任务 API 和 `jobs/` 清单，通过 `uv run polyscribe` 启动子进程；不直接加载模型或解析 workflow 私有目录。
+
+脚本和 CLI 的钢琴、人声、和弦 MIDI 流水线仍是产品验收门槛。桌面壳可以并行开发，但不能用 GUI 成功状态掩盖 worker 失败。

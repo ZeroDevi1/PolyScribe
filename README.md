@@ -32,7 +32,7 @@ uv run polyscribe process "audios\天生冷血 - 陈默之.flac" --targets piano
 - 多声部和声重建：Basic Pitch 候选 + PolyScribe Harmony Reconstruction（`harmony_1/2/3.mid`）
 - 乐谱：MIDI → MusicXML → PDF
 - Cover Mode：导出主唱、和声、歌词、音高曲线及相关 MIDI
-- 完整 Windows GUI
+- 完整 Windows GUI（WinUI 3 桌面壳已在 `apps/desktop/` 开工，见 [ADR 0001](docs/adr/0001-winui3-unpackaged.md)）
 
 ## 当前状态
 

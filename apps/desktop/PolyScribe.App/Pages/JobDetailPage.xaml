@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="PolyScribe.App.Pages.JobDetailPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="using:PolyScribe.App"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:PolyScribe.App.ViewModels"
+    mc:Ignorable="d">
+
+    <ScrollViewer Padding="{StaticResource PagePadding}">
+        <StackPanel MaxWidth="960" Spacing="16">
+            <StackPanel Spacing="4">
+                <TextBlock Style="{StaticResource PageTitleStyle}" Text="{x:Bind ViewModel.Title, Mode=OneWay}" />
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <FontIcon Glyph="{x:Bind ViewModel.StatusGlyph, Mode=OneWay}" />
+                    <TextBlock Text="{x:Bind ViewModel.StatusLabel, Mode=OneWay}" />
+                    <TextBlock Foreground="{ThemeResource TextFillColorTertiaryBrush}" Text="·" />
+                    <TextBlock
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Text="{x:Bind ViewModel.MetaLabel, Mode=OneWay}" />
+                </StackPanel>
+            </StackPanel>
+
+            <InfoBar
+                IsClosable="False"
+                IsOpen="True"
+                Message="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+                Severity="Error"
+                Title="任务失败"
+                Visibility="{x:Bind app:BindHelpers.VisibleIf(ViewModel.ErrorMessage), Mode=OneWay}" />
+
+            <InfoBar
+                IsClosable="True"
+                IsOpen="True"
+                Severity="Warning"
+                Title="警告"
+                Visibility="{x:Bind app:BindHelpers.VisibleIf(ViewModel.HasWarnings), Mode=OneWay}">
+                <InfoBar.Content>
+                    <ItemsControl ItemsSource="{x:Bind ViewModel.Warnings, Mode=OneWay}" />
+                </InfoBar.Content>
+            </InfoBar>
+
+            <CommandBar DefaultLabelPosition="Right">
+                <AppBarButton
+                    Click="Cancel_Click"
+                    Icon="Cancel"
+                    IsEnabled="{x:Bind ViewModel.CanCancel, Mode=OneWay}"
+                    Label="取消" />
+                <AppBarButton Command="{x:Bind ViewModel.PreviewCommand}" Label="预览">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE7C3;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton Command="{x:Bind ViewModel.OpenOutputCommand}" Label="打开输出">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE8B7;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton Command="{x:Bind ViewModel.OpenLogsCommand}" Label="日志">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE7BA;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton Command="{x:Bind ViewModel.ReloadCommand}" Icon="Refresh" Label="刷新" />
+            </CommandBar>
+
+            <TextBlock Style="{StaticResource SectionHeaderStyle}" Text="阶段" />
+            <ItemsRepeater ItemsSource="{x:Bind ViewModel.Stages, Mode=OneWay}">
+                <ItemsRepeater.Layout>
+                    <StackLayout Spacing="8" />
+                </ItemsRepeater.Layout>
+                <ItemsRepeater.ItemTemplate>
+                    <DataTemplate x:DataType="vm:StageItemViewModel">
+                        <Border Style="{StaticResource CardStyle}" Padding="16">
+                            <Grid ColumnSpacing="12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <FontIcon VerticalAlignment="Top" Glyph="{x:Bind StatusGlyph}" Margin="0,2,0,0" />
+                                <StackPanel Grid.Column="1" Spacing="6">
+                                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="{x:Bind Title}" />
+                                    <TextBlock
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Text="{x:Bind Workflow}" />
+                                    <ProgressBar
+                                        IsIndeterminate="{x:Bind IsIndeterminate}"
+                                        Maximum="1"
+                                        ShowPaused="False"
+                                        Value="{x:Bind Progress}" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                                    <TextBlock HorizontalAlignment="Right" Text="{x:Bind StatusLabel}" />
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Text="{x:Bind DurationLabel}" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+            </ItemsRepeater>
+
+            <TextBlock Style="{StaticResource SectionHeaderStyle}" Text="产物" />
+            <ListView
+                IsItemClickEnabled="True"
+                ItemClick="ArtifactList_ItemClick"
+                ItemsSource="{x:Bind ViewModel.Artifacts, Mode=OneWay}"
+                SelectionMode="None"
+                Visibility="{x:Bind app:BindHelpers.VisibleIf(ViewModel.HasArtifacts), Mode=OneWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="vm:ArtifactItemViewModel">
+                        <Grid Padding="4,8" ColumnSpacing="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <FontIcon Glyph="&#xE8A5;" />
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="{x:Bind Title}" />
+                                <TextBlock
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Text="{x:Bind Subtitle}"
+                                    TextTrimming="CharacterEllipsis" />
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <TextBlock
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                Text="产物会在对应阶段成功后出现，失败阶段不会生成空文件来冒充成功。"
+                Visibility="{x:Bind app:BindHelpers.CollapsedIf(ViewModel.HasArtifacts), Mode=OneWay}" />
+        </StackPanel>
+    </ScrollViewer>
+</Page>

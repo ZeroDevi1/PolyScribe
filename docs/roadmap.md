@@ -142,7 +142,7 @@ uv run polyscribe chords song.flac
 
 任务：
 
-- 通过短期 spike 比较 WinUI 3 与 WPF，只保留一个 UI 技术栈；
+- 通过短期 spike 比较 WinUI 3 与 WPF，只保留一个 UI 技术栈；**已选择 WinUI 3 unpackaged**，见 [ADR 0001](adr/0001-winui3-unpackaged.md) 与 `apps/desktop/`。
 - 实现拖放导入、目标选择、预设、进度、取消和错误详情；
 - 提供波形、和弦时间线、钢琴卷帘与冲突标记；
 - 支持任务恢复、试听、人工校正和产物打开；
